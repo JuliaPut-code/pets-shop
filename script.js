@@ -104,10 +104,14 @@ function makeElementByTemplate(title, description, img, price, tags) {
     return element;
 }
 
-items.forEach(item => {
-    const shopItem = makeElementByTemplate(item.title, item.description, item.img, item.price, item.tags);
-    container.append(shopItem);
-})
+function appendItemsToContainer(items, container) {
+    items.forEach(item => {
+        const shopItem = makeElementByTemplate(item.title, item.description, item.img, item.price, item.tags);
+        container.append(shopItem);
+    });
+}
+
+appendItemsToContainer(items, container);
 
 const searchInput = document.querySelector('#search-input');
 const searchButton = document.querySelector('#search-btn');
@@ -122,10 +126,7 @@ searchButton.addEventListener('click', function() {
     const filteredItems = items.filter(item => item.title.toLowerCase().includes(searchText));
 
     if (filteredItems.length > 0) {
-        filteredItems.forEach(item => {
-            const itemElement = makeElementByTemplate(item.title, item.description, item.img, item.price, item.tags);
-            container.append(itemElement);
-        });
+        appendItemsToContainer(filteredItems, container);
     } else {
         nothingFound.textContent = 'Ничего не найдено';
     }
